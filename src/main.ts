@@ -1,7 +1,6 @@
-import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app.module';
+import { AppModule } from './modules/app/app.module';
 import { Screamer } from './tools/screamer';
 
 async function bootstrap() {

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MorganInterceptor, MorganModule } from 'nest-morgan';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { morganDevFormat } from './tools/request-logger';
+import { morganDevFormat } from '../../tools/request-logger';
 
 @Module({
   imports: [MorganModule],
