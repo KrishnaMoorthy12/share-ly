@@ -1,4 +1,5 @@
-import { Column, Entity, ObjectID as ObjectIdType, ObjectIdColumn } from 'typeorm';
+import * as generate from 'project-name-generator';
+import { BeforeInsert, Column, Entity, ObjectID as ObjectIdType, ObjectIdColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
@@ -9,8 +10,16 @@ export class User {
   name: string;
 
   @Column()
+  handle: string;
+
+  @Column()
   email: string;
 
   @Column()
   key: string;
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.handle = generate({ words: 2, alliterative: true }).dashed;
+  }
 }
