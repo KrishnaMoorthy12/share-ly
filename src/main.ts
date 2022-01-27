@@ -17,6 +17,7 @@ async function bootstrap() {
     .setDescription(rootConfig.appDescription)
     .setVersion(rootConfig.appVersion)
     .addTag(routes.user.docs.tag, routes.user.docs.description)
+    .addTag(routes.group.docs.tag, routes.group.docs.description)
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(rootConfig.docsRoute, app, document);

@@ -5,6 +5,7 @@ import { MorganInterceptor, MorganModule } from 'nest-morgan';
 import { dbConfig, DbConfigType, rootConfig } from '../../config';
 import { validateConfig } from '../../config/validation';
 import { morganDevFormat } from '../../tools/request-logger';
+import { GroupModule } from '../group/group.module';
 import { UserModule } from '../user/user.module';
 
 @Module({
@@ -38,6 +39,7 @@ import { UserModule } from '../user/user.module';
       },
     }),
     UserModule,
+    GroupModule,
   ],
   providers: [
     {

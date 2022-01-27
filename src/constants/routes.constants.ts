@@ -1,4 +1,4 @@
-export const routes: RouteDescriptor = {
+export const routes = {
   user: {
     root: '/user',
     subRoutes: {
@@ -10,15 +10,14 @@ export const routes: RouteDescriptor = {
       description: 'User related routes',
     },
   },
+  group: {
+    root: '/group',
+    subRoutes: {
+      create: '/create',
+    },
+    docs: {
+      tag: 'group',
+      description: 'Routes for creating and managing groups',
+    },
+  },
 };
-
-type RouteProperties = {
-  root: string;
-  subRoutes: Record<string, string>;
-  docs: {
-    tag: string;
-    description: string;
-  };
-};
-
-type RouteDescriptor = Record<string, RouteProperties>;
