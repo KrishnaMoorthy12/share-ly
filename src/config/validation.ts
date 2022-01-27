@@ -30,7 +30,7 @@ class EnvironmentVariables {
   APP_LOG_LEVEL?: LogLevel = 'debug';
 
   @IsString()
-  DB_NAME?: string = 'tss-dev';
+  DB_NAME?: string = 'sharely';
 
   @IsString()
   DB_HOST?: string = 'localhost';
