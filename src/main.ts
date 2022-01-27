@@ -1,5 +1,7 @@
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { RootConfigType } from './config';
 import { AppModule } from './modules/app/app.module';
 import { Screamer } from './tools/screamer';
 
@@ -7,15 +9,19 @@ async function bootstrap() {
   const logger = new Screamer();
   const app = await NestFactory.create(AppModule, { logger });
 
+  const rootConfig = app.get(ConfigService).get<RootConfigType>('root');
+
   const config = new DocumentBuilder()
-    .setTitle('ShareLy')
-    .setDescription('The ShareLy API description')
-    .setVersion('0.1.0')
+    .setTitle(rootConfig.appName)
+    .setDescription(rootConfig.appDescription)
+    .setVersion(rootConfig.appVersion)
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup(rootConfig.docsRoute, app, document);
 
-  await app.listen(3000);
+  app.setGlobalPrefix(rootConfig.prefix);
+  await app.listen(rootConfig.port);
+
   logger.log(`App is listening at: ${await app.getUrl()}`, 'ApplicationRoot');
 }
 bootstrap();

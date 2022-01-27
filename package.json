@@ -1,8 +1,8 @@
 {
   "name": "share-ly",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "An app to share expenses - task for Zuperly Backend Internship application",
+  "author": "@KrishnaMoorthy12",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
