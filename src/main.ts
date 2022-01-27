@@ -1,9 +1,12 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { Screamer } from './tools/screamer';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = new Screamer();
+  const app = await NestFactory.create(AppModule, { logger });
 
   const config = new DocumentBuilder()
     .setTitle('ShareLy')
@@ -14,5 +17,6 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   await app.listen(3000);
+  logger.log(`App is listening at: ${await app.getUrl()}`, 'ApplicationRoot');
 }
 bootstrap();
