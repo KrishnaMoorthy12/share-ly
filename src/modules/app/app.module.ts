@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { MorganInterceptor, MorganModule } from 'nest-morgan';
-import { dbConfig, rootConfig } from '../../config';
+import { dbConfig, DbConfigType, rootConfig } from '../../config';
 import { validateConfig } from '../../config/validation';
 import { morganDevFormat } from '../../tools/request-logger';
 import { AppController } from './app.controller';
@@ -16,6 +17,26 @@ import { AppService } from './app.service';
       load: [rootConfig, dbConfig],
       cache: true,
       validate: validateConfig,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => {
+        const dbConfig = config.get<DbConfigType>('db');
+
+        return {
+          type: 'mongodb',
+          host: dbConfig.host,
+          port: dbConfig.port,
+          database: dbConfig.name,
+
+          useUnifiedTopology: true,
+          useNewUrlParser: true,
+
+          autoLoadEntities: true,
+          synchronize: config.get('NODE_ENV') !== 'production',
+        };
+      },
     }),
   ],
   controllers: [AppController],
