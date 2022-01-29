@@ -9,7 +9,8 @@ export class GroupService {
   constructor(@InjectRepository(Group) private readonly repo: Repository<Group>) {}
 
   async create(groupDetails: CreateGroupInputDto) {
-    const group = this.repo.create(groupDetails);
+    const { members: pending, ...rest } = { ...groupDetails };
+    const group = this.repo.create({ ...rest, pending });
     return this.repo.save(group);
   }
 }
